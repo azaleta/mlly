@@ -1,7 +1,7 @@
 import { tokenizer } from 'acorn'
+import { matchAll } from './_utils'
 import { ResolveOptions, resolvePath } from './resolve'
 import { loadURL } from './utils'
-import { matchAll } from './_utils'
 
 export interface ESMImport {
   type: 'static' | 'dynamic'
