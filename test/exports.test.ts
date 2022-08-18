@@ -1,6 +1,5 @@
-import { join } from 'path'
-import { describe, it, expect } from 'vitest'
-import { ESMExport, findExports, findExportNames, resolveModuleExportNames } from '../src'
+import { describe, expect, it } from 'vitest'
+import { ESMExport, findExportNames, findExports, resolveModuleExportNames } from '../src'
 
 describe('findExports', () => {
   const tests: Record<string, Partial<ESMExport>> = {
@@ -18,7 +17,9 @@ describe('findExports', () => {
     'export * from "./other"': { type: 'star', specifier: './other' },
     'export * as foo from "./other"': { type: 'star', specifier: './other', name: 'foo' },
     // eslint-disable-next-line no-template-curly-in-string
-    'const a = `<div${JSON.stringify({ class: 42 })}>`;\nexport default true;': { type: 'default', name: 'default', names: ['default'] }
+    'const a = `<div${JSON.stringify({ class: 42 })}>`;\nexport default true;': { type: 'default', name: 'default', names: ['default'] },
+    'export const enum foo { a = \'xx\' }': { type: 'declaration', names: ['foo'] },
+    'export enum bar { a = \'xx\' }': { type: 'declaration', names: ['bar'] }
   }
 
   for (const [input, test] of Object.entries(tests)) {
